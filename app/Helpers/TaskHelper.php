@@ -1203,16 +1203,13 @@ public static function getTotalMonthly($id, $fiscal_year = false)
     ->whereBetween('entries.date', [$firstmonthDate, $lastmonthDate])
     ->where('entries.is_approved','=', 1)
     ->get();
-
         //dd($q);
-
     return $q;
 }
 public static function getDrCrByGroups($id,$start_date = null, $end_date = null)
 {
 
     $start_date = Request::get('start_date') ?? $start_date;
-
     $end_date = Request::get('end_date') ?? $end_date;
         // dd($start_date,$end_date);
     $ei_table = new Entryitem();
@@ -1223,12 +1220,14 @@ public static function getDrCrByGroups($id,$start_date = null, $end_date = null)
         $fiscal_year = \Session::get('selected_fiscal_year') ?? $current_fiscal->numeric_fiscal_year;
 
         if ($fiscal_year != null && $fiscal_year != $current_fiscal->numeric_fiscal_year) {
+            // dd('check if');
             $prefix = $fiscal_year . '_';
             $new_ei = $prefix . 'entryitems';
             $new_coa = $prefix . 'coa_ledgers';
             $ei_table->setTable($new_ei);
             $ledger_table->setTable($new_coa);
         }
+
     // build our category list only once
     $cats = [];
 
@@ -1275,7 +1274,6 @@ public static function getTotalByGroups($id, $start_date = null, $end_date = nul
 
         $cats = $group_table->orderBy('id', 'asc')->get();
         $parent_ids = TaskHelper::buildTree($cats, $id);
-
         $cont = count($parent_ids);
 
         $parent_ids[$cont] = $id;
@@ -1442,14 +1440,16 @@ public static function buildTree($elements, $parentId = 0)
     $branch = [];
 
     foreach ($elements as $element) {
-        if ($element->parent_id == $parentId) {
+          if ($element->parent_id == $parentId) {
             $children = self::buildTree($elements, $element->id);
-
+            // dump($element, $children);
             if ($children) {
                 $branch = array_merge($branch, $children);
+                
             }
             $branch[] = $element->id;
         }
+       
     }
 
     return $branch;

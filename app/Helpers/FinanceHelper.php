@@ -73,6 +73,7 @@ $entrytype = \App\Models\Entrytype::where(DB::raw("REPLACE(TRIM(id),'\r\n','')")
         $ledger = \App\Models\LedgerSettings::where('org_id', $org_id)
       ->where(DB::raw("REPLACE(TRIM(ledger_name),'\r\n','')"), $name)
       ->first();
+    
         if ($ledger) {
             return $ledger->ledger_id;
         } else {

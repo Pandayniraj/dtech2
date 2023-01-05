@@ -26,7 +26,6 @@ class PurchaseExport implements FromView ,ShouldAutoSize
     public function view(): View
     {
     	return view('admin.purchase-book.purchaseexport',['data'=>$this->data,'excel_name'=>$this->excel_name]);
-
         // return $this->viewFile ;
     }
 }

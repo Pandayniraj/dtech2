@@ -103,7 +103,7 @@
                                 }
 
                             $group_id = \FinanceHelper::get_ledger_id('INCOME_PARENT_LEDGER_GROUP');
-
+                                // dd($group_id);
                             $income = \TaskHelper::getDrCrByGroups($group_id, $start_date, $end_date);
 
                             ?>

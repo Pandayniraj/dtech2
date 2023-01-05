@@ -334,9 +334,9 @@ $costterms=\App\Models\CostTerm::pluck('name');
                                 </select>
                             </td>
                             <td class="col-sm-1">
-                                <input type="text" name="description[]" class="form-control input-sm description input-sm" placeholder="Description"  style="width:87%;>
+                                <input type="text" name="description[]" class="form-control input-sm description input-sm" placeholder="Description"  style="width:80%;>
 
-                                <a href="javascript::void(1);" style="width: 10%;">
+                                <a href="javascript::void(1);" style="width:10%;">
                                     <i class="remove-this icon fa fa-trash deletable" style="float: right; color: red; margin-top: 6px;"></i>
                                 </a>
                             </td>
@@ -951,7 +951,7 @@ $costterms=\App\Models\CostTerm::pluck('name');
                                         </select>
                                     </td>
                                     <td class="col-sm-1">
-                                        <input type="text" name="description[]" class="form-control input-sm description input-sm" placeholder="Description" value="{{$items->description}}">
+                                        <input type="text" name="description[]" class="form-control input-sm description input-sm" placeholder="Description" value="{{$items->description}}" style="width: 80% !important;">
 
                                         <a href="javascript::void(1);" style="width: 10%;">
                                             <i class="remove-this icon fa fa-trash deletable" style="float: right; color: red;"></i>
