@@ -2110,7 +2110,7 @@ Route::get('invoicetrash', ['as' => 'admin.invoicetrash.index', 'uses' => 'Invoi
 Route::get('chartofaccounts/groupdetail/pdf/{id}', ['as' => 'admin.chartofaccounts.groupdetail.pdf', 'uses' => 'COAController@DownloadGroupPdf']);
 
         Route::get('chartofaccounts/groupdetail/print/{id}', ['as' => 'admin.chartofaccounts.groupdetail.print', 'uses' => 'COAController@PrintGroups']);
-
+        Route::post('chartofaccounts/get-balancesheer-Ledgers-Ajax', ['as' => 'admin.chartofaccounts.get-BalanceSheet-LedgersAjax', 'uses' => 'COAController@getBalanceSheetLedgersAjax']);
          Route::get('chartofaccounts/groupdetail/excel/{id}', 'COAController@downloadGroupExcel');
         // Entries
         Route::post('entries/verfied',['as'=>'admin.entry.verified', 'uses'=>'EntryController@entries_verfied']);

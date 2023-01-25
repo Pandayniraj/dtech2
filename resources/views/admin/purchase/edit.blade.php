@@ -904,7 +904,7 @@ $costterms=\App\Models\CostTerm::pluck('name');
                                     <td class='c_sn'>{{$count++}}</td>
                                     <td>
 
-                                        <select class="form-control input-sm select2 cost_type" name="cost_type[]" required="required" >
+                                        <select class="form-control input-sm select2 cost_type cost_term_type" name="cost_type[]" required="required" >
                                             <option value="">Select Cost</option>
                                             @foreach ($costterms as $term)
                                                 <option value="{{$term}}"  @if($items->cost_type==$term) selected @endif>{{$term}}</option>
@@ -1043,7 +1043,10 @@ $costterms=\App\Models\CostTerm::pluck('name');
         }
     }
 </script>
-
+<script>
+    var a= document.getElementsByClassName('cost_term_type');
+    console.log(a);
+</script>
 
 <script>
     $('.date-toggle-nep-eng').nepalidatetoggle();

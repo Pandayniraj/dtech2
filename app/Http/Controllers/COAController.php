@@ -5,7 +5,7 @@ use App\Models\Audit as Audit;
 use Flash;
 use DB;
 use Auth;
-
+use App\Helpers\TaskHelper;
 use App\User;
 use App\Models\Department;
 use App\Models\Entryitem;
@@ -494,7 +494,42 @@ class COAController extends Controller
       return $code;
      }
     }
+    public function getBalanceSheetLedgersAjax(Request $request)
+    {
+        $request->validate([
+            'group_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $ledgers = \App\Models\COALedgers::orderBy('code', 'asc')
+            ->where([['org_id', auth()->user()->org_id], ['group_id', $request->group_id]])->get();
+        if (count($ledgers) > 0) {
+            $sub_mark = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp";
+            $sub_mark = $sub_mark . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
+            $ledger_row = '';
+            foreach ($ledgers as $ledger) {
+                $opening_balance = TaskHelper::getLedgersOpeningBalance($ledger, $start_date);
+                $dr_cr = TaskHelper::getLedgerDrCr($ledger, $start_date, $end_date);
+                $closing_balance = \App\Helpers\TaskHelper::getLedgerClosing($opening_balance, $dr_cr['dr_total'], $dr_cr['cr_total']);
+                if ($closing_balance['dc'] == 'D') {
+                    $ledger_row .= '<tr class="bg-danger ledger-class">
+                                        <td class="bg-warning"><a href="/admin/accounts/reports/ledger_statement?ledger_id=' . $ledger->id . '">' . $sub_mark . '[' . $ledger->code . ']' . $ledger->name . '</a></td>
+                                        <td class="bg-warning f-16">Dr <span>' . number_format($closing_balance['amount'], 2) . '</span></td>
+                                    </tr>';
+                } else {
+                    $ledger_row .= '<tr class="bg-warning ledger-class">
+                                        <td class="bg-danger"><a href="/admin/accounts/reports/ledger_statement?ledger_id=' . $ledger->id . '">' . $sub_mark . '[' . $ledger->code . ']' . $ledger->name . '</a></td>
+                                        <td class="bg-danger f-16">Cr <span>' . number_format($closing_balance['amount'], 2) . '</span></td>
+                                    </tr>';
+                }
+            }
+        }
+         return response()->json($ledger_row);
+
+    }
 
   public function getNextCodeLedgers(Request $request) {
     $id=$request->id;

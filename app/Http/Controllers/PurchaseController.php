@@ -611,8 +611,6 @@ class PurchaseController extends Controller
 
             $purchasedetails = PurchaseOrderDetail::where('order_no', $purchaseorder->id)->delete();
 
-            PurchaseOrderDetail::where('order_no', $purchaseorder->id)->delete();
-
             $product_id = $request->product_id;
 
             $price = $request->price;

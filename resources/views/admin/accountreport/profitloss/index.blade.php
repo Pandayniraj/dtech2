@@ -251,12 +251,12 @@
                             <tr class="bg-info">
                                 <th>Gross Profit</th>
                                 <?php
-                                $gross_profit = $total_income - $cost_of_sales - $cost_of_directexpenses;
+                                $gross_profit = $total_income - $cost_of_sales + $cost_of_directexpenses;
                                 ?>
                                 <th>{{number_format($gross_profit,2)}}</th>
                             </tr>
                             <?php
-                            $group_id = \FinanceHelper::get_ledger_id('INDIRECT_INCOME_LEDGER_GROUP');
+                            $group_id = \FinanceHelper::get_ledger_id('OTHER_INCOME_LEDGER_GROUP');
                             $other_income_totals = \TaskHelper::getDrCrByGroups($group_id, $start_date, $end_date);
                             $other_income = abs($other_income_totals['dr_amount']-$other_income_totals['cr_amount']);
                             ?>
@@ -331,7 +331,7 @@
                                 @endforeach
                             @endforeach
                             <tr class="bg-info">
-                                <th>Profit Before Tax</th>
+                                <th>Net Profit Before Tax</th>
                                 <?php
                                 $profit_before_tax = $gross_profit + $other_income - $indirect_exp_total
                                 ?>
